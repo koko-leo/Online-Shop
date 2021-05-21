@@ -10,6 +10,21 @@
 
     function getAllProducts() {
 		$cnx = connection();
-		$result = $cnx->query('select * from product');
+		$result = $cnx->query('select * from product ORDER BY id ASC');
+		
 		return $result->fetchall();
+	}
+
+	function getShoppingCart(){
+		$cnx = connection();
+		$result = $cnx->query('select * from shopping_cart');
+		
+		return $result->fetchall();
+	}
+
+	function addToCart($id, $value) {
+		$cnx = connection();
+		$rqt = $cnx->prepare('insert into shopping_cart(id_product, id_order, quantity) values( ?, 1, ? )');
+		$rqt->execute(array($id, 1 ,$value));
+		return getShoppingCart();
 	}

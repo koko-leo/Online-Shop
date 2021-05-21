@@ -3,13 +3,15 @@
 	
     session_start();
 	
-	function getPlanetsAsTable() {
-		return json_encode(getAll());
+	function displayProducts() {
+		return json_encode(getAllProducts());
 	}
 	
-	function getAPlanet($name) {
-		return json_encode(getPlanet($name));
+	function addToShoppingCart($value) {
+		return json_encode(addToCart($value));
 	}
+
+	/***************************/
 	function addAPlanet($form) {
 		//we want the data as an associative array
 		$planet = json_decode($form, true);

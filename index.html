@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sporty Shop</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<h1>Sporty Shop</h1>
+	<div id="list">
+	</div>
+	<div id="formProduct" style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px;" align="center">
+			<form>
+				<fieldset>
+						<label for="input-name">Name: </label>
+						<input type="text" name="name" id='input-name'>
+
+						<label for="input-carac">Caracteristiques</label>
+						<input type="text" name="carac" id='input-carac'>
+
+                        
+                        <input type="text" name="quantity" id= 'input-quantity' />  
+						<button id="adding" style="margin-top:5px;">Add To Shopping Cart</button>
+
+
+                        <h4 class="text-info"><?php echo $row["name"]; ?></h4>  
+                               <h4 class="text-danger">$ <?php echo $row["price"]; ?></h4>  
+                               
+                               <input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" />  
+                               <input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" />  
+                              
+				</fieldset>
+			</form>
+	</div>
+    <div id="divCart">
+        <label type="input-name">Item Name: </label>
+		<input type="text" name="name" id='input-name'>
+
+		<label for="input-carac">Caracteristiques</label>
+		<input type="text" name="carac" id='input-carac'>
+		<button id="remove">Remove</button>
+        
+</div>
+	<script src="app.js"></script>
+</body>
+</html>
