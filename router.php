@@ -6,7 +6,7 @@
 	$method = $_SERVER['REQUEST_METHOD'];
 
     switch($page[2]) {
-		case 'products' : 
+		case 'product' : 
 			switch($method) {
 				case 'GET' : 
 					echo displayProducts();
