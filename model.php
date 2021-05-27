@@ -1,18 +1,30 @@
 <?php
-	
-	$host = 'localhost';
-	$user = 'mamp';
-	$passwd = 'imac';
-	$dbname = 'online_store';
-
-	$dsn = 'mysql:host='. $host .';dbname='. $dbname;
 
 	function connection() {
+	
+		$host = 'localhost';
+		$user = 'mamp';
+		$passwd = '1234';
+		$dbname = 'online_store';
+
+		$dsn = 'mysql:host='. $host .';dbname='. $dbname;
 		$cnx = new PDO($dsn, $user, $passwd);
 		if(!$cnx) {
 			die('Connection failed');
 		}
 		return $cnx;
+	}
+
+	function doLogin($email, $passwd){
+		$cnx = connection();
+		$rqt = $cnx->query('SELECT * FROM client WHERE email= ? AND password = ?');
+
+		if ($rqt->num_rows == 0) {
+			print("<p> Unknonw User! </p>");
+        }
+		session_start();
+		header("location: index.html");
+
 	}
 
     function getAllProducts() {
@@ -31,14 +43,15 @@
 
 	function addToCart($id, $quantity, $price) {
 		$cnx = connection();
-		$rqt = $cnx->prepare('INSERT INTO shopping_cart(id_product, id_order, quantity, price) values( ?, 1, ?, ? )');
-		$rqt->execute(array($id, 1 ,$quantity, $price));
+		$rqt = $cnx->prepare('INSERT INTO shopping_cart(id_product, id_order, quantity, price) values( ?, ?, ?, ? )');
+		$rqt->execute(array($id, 1 , 1 , $price));
 		return getShoppingCart();
 	}
 
 	function getProductName($id_product) {
 		$cnx = connection();
-		$result = $cnx->query('SELECT name FROM product WHERE id = id_product');
+		$result = $cnx->query('SELECT name FROM product WHERE id = ?');
+		$rqt->execute(array($id_product));
 		return $result;
 	}	
 

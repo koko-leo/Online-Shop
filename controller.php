@@ -2,6 +2,15 @@
 	require_once('model.php');
 	
     session_start();
+
+	function displayLogin(){
+		return json_encode();
+	}
+
+	function executeLogin($form){
+		$client = json_decode($form, true);
+		return json_encode(doLogin($client['cltemail'], $planet['psw']));
+	}
 	
 	function displayProducts() {
 		return json_encode(getAllProducts());

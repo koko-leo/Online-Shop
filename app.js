@@ -8,6 +8,16 @@ Document.prototype.ready = callback => {
 	}
 };
 
+document.ready( () => {
+	
+	fetch("./router.php/product")
+		.then( response => response.json() )
+		.then( data => {
+			displayProducts(data);
+		})
+		.catch(error => { console.log(error) });
+});
+
 function showForm() {
 	// this will make possible to see the products (shows the form of the products)
 	document.getElementById('formProduct').style.display = 'initial';	
@@ -21,21 +31,17 @@ function hiddeShoppingCart() {
 
 
 function displayProducts(products) {
-    
-    hiddeShoppingCart();
 
     const list = document.getElementById('list');
 
-    var content = "<tr><td>Name</td><td>Caracteristics</td><td><button onclick='showForm()'>Add To Shopping Cart</button></td></tr>";
+    var content = "";
     
     products.forEach(function(products) {
 
-        content += "<h2 class=text-info>" + products.name + "</h2><h2 class=text-danger>$" + products.price;     
-        
+        content += "<div class=product>" + products.name + "</div><div class=product>$" + products.price + "</td><br><button onclick='addToCart(\"" + 1 +  "\")'>Add To Shopping Cart</button></br></tr>";     
     });
     
-    content += "</h2>";
-          
+    content += "</div>";
     list.innerHTML = content;
 }
 
@@ -53,23 +59,46 @@ function displayShoppingCart(cart){
     list.innerHTML = content;
 }
 
-document.getElementById('adding').onclick = event => {
-	// This function is attached to the button 'adding' once the page is loaded
-	//When the user valids his form, we avoid the reload of the page
-	event.preventDefault();
-	//we hide the form (to go back to the visual state at the beginning
-	hiddeShoppingCart();
-
-	// Building the request, in JSON, and send it to the server
-    const form = {};
-	form.nom = document.getElementById('input-quantity').value;
+function addToCart(quantity) {
 	
-	fetch('./router.php/shopping_cart', { method: 'POST', body: JSON.stringify(form)})
+	fetch('./router.php/shopping_cart', { method: 'POST', body: JSON.stringify(quantity)})
 	.then(response => response.json())
 	.then (data =>{
-			//once again, we need to display the data. The function 'displayPlanets' is for that purpose
 			displayShoppingCart(data);
 	})
 	.catch(error => { console.log(error) });	
 }
+
+document.getElementById('loginbtn').onclick = event => {
+	
+	event.preventDefault();
+
+	fetch("./router.php/client")
+		.then( response => response.json() )
+		.then( data => {
+			//show login html
+		})
+		.catch(error => { console.log(error) });
+}
+
+function showLoginForm(){
+	document.getElementById('formLogin').style.display = 'initial';
+}
+
+document.getElementById('submit').onclick = event => {
+	
+	event.preventDefault();
+
+	const form = {};
+	form.nom = document.getElementById('client-email').value;
+	form.carac = document.getElementById('client-psw').value;
+	
+	fetch('./router.php/client', { method: 'POST', body: JSON.stringify(form)})
+	.then(response => response.json())
+	.then (data =>{
+			//go back to shop
+	})
+	.catch(error => { console.log(error) });		
+}
+
 

@@ -2,26 +2,28 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	
 	<title>Sporty Shop</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 	<h1>Sporty Shop</h1>
+	
 	<div id="list">
 	</div>
-	<div id="formProduct" style="border:1px solid #333; background-color:#dedfde; border-radius:5px; padding:16px;" align="center">
-			<form>
-				<fieldset>
-                        <input type="text" name="quantity" id= 'input-quantity' />  
-						<button id="adding" style="margin-top:5px;">Add To Shopping Cart</button>
-                              
-				</fieldset>
-			</form>
+
+	<div id="formProduct" >
+		<div class="product">
+			<input type="text" name="quantity" id= 'input-quantity' />
+			<button id="adding">Add To Shopping Cart</button>
+		</div>
 	</div>
     <div id="divCart">
-		<button id="remove">Remove</button>
-        
-</div>
+	</div>
+
+	<div id="login">
+		<button id="loginbtn">Login</button>
+	</div>
 	<script src="app.js"></script>
 </body>
 </html>
