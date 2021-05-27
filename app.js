@@ -38,11 +38,27 @@ function displayProducts(products) {
     
     products.forEach(function(products) {
 
-        content += "<div class=product>" + products.name + "</div><div class=product>$" + products.price + "</td><br><button onclick='addToCart(\"" + 1 +  "\")'>Add To Shopping Cart</button></br></tr>";     
-    });
+        content += "<div class='product'><p>" + products.name + "</p><br><p>$" + products.price 
+					+ "</p><br><p><input type='number' name='quantity' id= 'inputquantity'"+products.id+" />"
+					+ "</p><br><p><button onclick='addToCart(\"" + products.id + "\",\"" + 'inputquantity'+products.id + "\")'>Add To Shopping Cart</button></p><br></div>";     
+	});
     
     content += "</div>";
     list.innerHTML = content;
+}
+
+function addToCart(id, input) {
+
+	const form = {};
+	form.id = id;
+	form.quantity = document.getElementById(input).value;
+	alert(form.quantity);
+	fetch('./router.php/product', { method: 'POST', body: JSON.stringify(form)})
+	.then(response => response.json())
+	.then (data =>{
+			displayShoppingCart(data);
+	})
+	.catch(error => { console.log(error) });	
 }
 
 function displayShoppingCart(cart){
@@ -59,17 +75,9 @@ function displayShoppingCart(cart){
     list.innerHTML = content;
 }
 
-function addToCart(quantity) {
-	
-	fetch('./router.php/shopping_cart', { method: 'POST', body: JSON.stringify(quantity)})
-	.then(response => response.json())
-	.then (data =>{
-			displayShoppingCart(data);
-	})
-	.catch(error => { console.log(error) });	
-}
 
-document.getElementById('loginbtn').onclick = event => {
+
+/*document.getElementById('loginbtn').onclick = event => {
 	
 	event.preventDefault();
 
@@ -99,6 +107,6 @@ document.getElementById('submit').onclick = event => {
 			//go back to shop
 	})
 	.catch(error => { console.log(error) });		
-}
+}*/
 
 

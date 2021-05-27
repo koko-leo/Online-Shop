@@ -16,8 +16,9 @@
 		return json_encode(getAllProducts());
 	}
 	
-	function addToShoppingCart($value) {
-		return json_encode(addToCart($value));
+	function addToShoppingCart($form) {
+		$product = json_decode($form, true);
+		return json_encode(addToCart($product['id'], $product['quantity']));
 	}
 
 	function removeFromShoppingCart($id_product) {

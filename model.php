@@ -41,10 +41,13 @@
 		return $result->fetchall();
 	}
 
-	function addToCart($id, $quantity, $price) {
+	function addToCart($id, $quantity) {
 		$cnx = connection();
+		$result = $cnx->query('SELECT price FROM product WHERE id = ?');
+		$price->execute(array($id));
 		$rqt = $cnx->prepare('INSERT INTO shopping_cart(id_product, id_order, quantity, price) values( ?, ?, ?, ? )');
-		$rqt->execute(array($id, 1 , 1 , $price));
+		$rqt->execute(array($id, 1 , $quantity , $price));
+
 		return getShoppingCart();
 	}
 

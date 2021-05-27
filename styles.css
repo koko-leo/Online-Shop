@@ -58,16 +58,14 @@ span.psw {
 }
 
 .product{
-    
-    display: inline-block;
-    vertical-align: middle; 
-}
-
-#list{
     border:1px solid #333; 
     background-color:#dedfde; 
     border-radius:5px; 
     padding:16px;
     display: inline-block;
     vertical-align: middle; 
+}
+
+#list{
+    background-color:#fefffe; 
 }
