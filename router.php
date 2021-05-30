@@ -13,7 +13,10 @@
 					break;
 				case 'POST' :
 					$json = file_get_contents('php://input');
-					echo addToShoppingCart($json);
+					echo newProduct($json);
+					break;
+				case 'DELETE' : 
+					echo removeProduct($page[3]);
 					break;
 				default:
 					http_response_code('404');
@@ -24,8 +27,7 @@
 		case 'client' : 
 			switch($method) {
 				case 'GET' : 
-					$json = file_get_contents('login.html');
-					echo displayLogin($json);
+					echo displayLogin();
 					break;
 				case 'POST' :
 					$json = file_get_contents('php://input');
@@ -36,6 +38,35 @@
 					echo 'OOPS';
 			}
 			break;	
+		
+		case 'shopping_cart' : 
+			switch($method) {
+				case 'POST' :
+					$json = file_get_contents('php://input');
+					echo addToShoppingCart($json);
+					break;
+				case 'DELETE' : 
+					echo removeFromShoppingCart($page[3]);
+					break;
+	
+				default:
+					http_response_code('404');
+					echo 'OOPS';
+			}
+			break;
+
+		case 'edit' : 
+			switch($method) {
+				case 'POST' :
+					$json = file_get_contents('php://input');
+					echo editProduct($json);
+					break;
+				default:
+					http_response_code('404');
+					echo 'OOPS';
+			}
+			break;
+		
 		
 		default : 
 		http_response_code('500');

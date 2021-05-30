@@ -39,74 +39,67 @@ function displayProducts(products) {
     products.forEach(function(products) {
 
         content += "<div class='product'><p>" + products.name + "</p><br><p>$" + products.price 
-					+ "</p><br><p><input type='number' name='quantity' id= 'inputquantity'"+products.id+" />"
-					+ "</p><br><p><button onclick='addToCart(\"" + products.id + "\",\"" + 'inputquantity'+products.id + "\")'>Add To Shopping Cart</button></p><br></div>";     
+					+ "</p><br><p><input type='number' name='quantity' id= 'inputquantity" + products.id + "' />"
+					+ "</p><br><p><button onclick='addToCart(\"" + products.id + "\")'>Add To Shopping Cart</button></p><br></div>";     
 	});
     
     content += "</div>";
     list.innerHTML = content;
 }
 
-function addToCart(id, input) {
+function addToCart(id) {
 
 	const form = {};
 	form.id = id;
-	form.quantity = document.getElementById(input).value;
-	alert(form.quantity);
-	fetch('./router.php/product', { method: 'POST', body: JSON.stringify(form)})
-	.then(response => response.json())
-	.then (data =>{
-			displayShoppingCart(data);
-	})
-	.catch(error => { console.log(error) });	
+	form.quantity = document.getElementById('inputquantity'+ id).value;
+	
+	if(form.quantity < 1 ){
+		alert("Insert positive quantity, please. Thank you :)")
+	} else {
+		fetch('./router.php/shopping_cart/', { method: 'POST', body: JSON.stringify(form)})
+		.then(response => response.json())
+		.then (data =>{
+				displayShoppingCart(data);
+		})
+		.catch(error => { console.log(error) });
+	}	
 }
 
-function displayShoppingCart(cart){
+function displayShoppingCart(carts){
     
     const list = document.getElementById('divCart');
 
     var content = "<table><tr><td>Item Name</td><td>Quantity</td><td>Price</td><td>Total</td><td>Action</td><td><button onclick='showForm()'></td></tr>";
-  
+	
     // this loop will show every product added to the shopping cart in a table with a remove button for each
-    cart.forEach(function (cart) {
-        content += '<tr><td>' + getProductName(cart.id_product) + "</td><td>"  + cart.quantity  + "</td><td>"  + cart.price + "</td><td>"  + cart.quantity*cart.price + "</td><td><button onclick='remove(\"" + getProductName(cart.id_product) +  "\")'>Remove</button></td></tr>";
+    carts.forEach(function (cart) {
+		console.log(cart);
+        content += '<tr><td>' + cart.name + "</td><td>"  
+					+ cart.quantity  + "</td><td>"  
+					+ cart.price + "</td><td>"  
+					+ cart.quantity*cart.price 
+					+ "</td><td><button onclick='removeItem(\"" + cart.id_product +  "\")'>Remove</button></td></tr>"; //remove with id and name (?)
     });
     content += "</table>";
     list.innerHTML = content;
 }
 
+function removeItem(id_product){
 
-
-/*document.getElementById('loginbtn').onclick = event => {
-	
-	event.preventDefault();
-
-	fetch("./router.php/client")
-		.then( response => response.json() )
-		.then( data => {
-			//show login html
-		})
-		.catch(error => { console.log(error) });
-}
-
-function showLoginForm(){
-	document.getElementById('formLogin').style.display = 'initial';
-}
-
-document.getElementById('submit').onclick = event => {
-	
-	event.preventDefault();
-
-	const form = {};
-	form.nom = document.getElementById('client-email').value;
-	form.carac = document.getElementById('client-psw').value;
-	
-	fetch('./router.php/client', { method: 'POST', body: JSON.stringify(form)})
+	fetch("./router.php/shopping_cart/" + id_product, { method: 'DELETE'})
 	.then(response => response.json())
 	.then (data =>{
-			//go back to shop
+			displayShoppingCart(data);
 	})
-	.catch(error => { console.log(error) });		
-}*/
+	.catch(error => { console.log(error) });
+
+}
+
+
+
+document.getElementById('loginbtn').onclick = event => {
+	event.preventDefault();
+	window.location.replace('./login.html');
+}
 
 
