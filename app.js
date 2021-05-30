@@ -28,8 +28,6 @@ function hiddeShoppingCart() {
 	document.getElementById('divCart').style.display = 'none';	
 }
 
-
-
 function displayProducts(products) {
 
     const list = document.getElementById('list');
@@ -94,8 +92,6 @@ function removeItem(id_product){
 	.catch(error => { console.log(error) });
 
 }
-
-
 
 document.getElementById('loginbtn').onclick = event => {
 	event.preventDefault();

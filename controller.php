@@ -3,13 +3,9 @@
 	
     session_start();
 
-	function displayLogin(){
-		return json_encode();
-	}
-
 	function executeLogin($form){
 		$client = json_decode($form, true);
-		return json_encode(doLogin($client['email'], $planet['psw']));
+		return json_encode(doLogin($client['email'], $client['psw']));
 	}
 	
 	function displayProducts() {
@@ -37,4 +33,10 @@
 	function editProduct($form){
 		$product = json_decode($form, true);
 		return json_encode(editAProduct($product['id'], $product['name'], intval($product['price'],10), $product['category']));
+	}
+
+	function clientSignUp($form){
+		$client = json_decode($form, true);
+		return json_encode(doSignUp($client['username'], $client['email'], $client['psw']));
+		
 	}

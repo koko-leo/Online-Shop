@@ -26,9 +26,7 @@
 
 		case 'client' : 
 			switch($method) {
-				case 'GET' : 
-					echo displayLogin();
-					break;
+		
 				case 'POST' :
 					$json = file_get_contents('php://input');
 					echo executeLogin($json);
@@ -66,6 +64,18 @@
 					echo 'OOPS';
 			}
 			break;
+
+		case 'signup' : 
+			switch($method) {
+				case 'POST' :
+					$json = file_get_contents('php://input');
+					echo clientSignUp($json);
+					break;
+				default:
+					http_response_code('404');
+					echo 'OOPS';
+			}	
+		break;
 		
 		
 		default : 

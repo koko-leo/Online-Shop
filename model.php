@@ -21,10 +21,33 @@
 		$rqt->execute(array($email, $passwd));
 
 		if ($rqt->rowCount() == 0) {
-			http_response_code('500');
+			http_response_code('400');
         }
 		session_start();
+	}
+	
+	function doSignUp($username, $email, $psw){
+		$cnx = connection();
 
+		if(clientExists($email, $username)) {
+			http_response_code('500');
+		} else{
+			$rqt = $cnx->prepare('INSERT INTO client (name, password, email) VALUES (?, ?, ?)');
+			$rqt->execute(array($username, $psw, $email));
+			session_start();
+		}	
+	}
+
+	function clientExists($email, $username){
+		$cnx = connection();
+
+		$rqt = $cnx->prepare('SELECT * FROM client WHERE email= ? AND name = ?');
+		$rqt->execute(array($email, $username));
+
+		if ($rqt->rowCount() == 0) {
+			return false;
+        }
+		return true;
 	}
 
     function getAllProducts() {
@@ -154,3 +177,5 @@
 
 		return getAllProducts();
 	}
+
+	
